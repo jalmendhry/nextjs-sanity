@@ -11,6 +11,7 @@
     "dev": "concurrently \"next --port 9000\" \"cd studio && sanity start\"",
     "build:next": "next dev -p 9000",
     "build": "echo 'Building Sanity to public/admin' && cd studio && sanity build ../public/admin -y && cd .. && next build && next export -o build",
+    "build:prod": "echo 'Building Sanity to public/admin' && cd studio && sanity build ../public/admin -y && cd .. && next build",
     "start": "vercel dev"
   },
   "keywords": [],

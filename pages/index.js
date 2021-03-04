@@ -12,19 +12,19 @@ function urlFor(source) {
   return imageUrlBuilder(client).image(source);
 }
 
-const Home = () => {
-  const [pageData, setPageData] = useState([]);
+const Home = ({ pageData }) => {
+  // const [pageData, setPageData] = useState([]);
 
-  useEffect(() => {
-    const getData = async () => {
-      const data = await client.fetch(groq`
-      *[_type == "homepage"]
-      `);
+  // useEffect(() => {
+  //   const getData = async () => {
+  //     const data = await client.fetch(groq`
+  //     *[_type == "homepage"]
+  //     `);
 
-      setPageData(data[0]);
-    };
-    getData();
-  }, []);
+  //     setPageData(data[0]);
+  //   };
+  //   getData();
+  // }, []);
 
   if (pageData) {
     const { title, carousel, body } = pageData;
@@ -58,6 +58,18 @@ const Home = () => {
   } else {
     return null;
   }
+};
+
+export const getServerSideProps = async () => {
+  const pageData = await client.fetch(groq`
+      *[_type == "homepage"]
+    `);
+
+  return {
+    props: {
+      pageData: pageData[0],
+    },
+  };
 };
 
 // export const getStaticProps = async () => {
